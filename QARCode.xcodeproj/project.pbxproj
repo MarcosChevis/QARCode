@@ -9,21 +9,23 @@
 /* Begin PBXBuildFile section */
 		BA9F46BB284FB84C00FDCEB7 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA9F46BA284FB84C00FDCEB7 /* AppDelegate.swift */; };
 		BA9F46BD284FB84C00FDCEB7 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA9F46BC284FB84C00FDCEB7 /* SceneDelegate.swift */; };
-		BA9F46BF284FB84C00FDCEB7 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA9F46BE284FB84C00FDCEB7 /* ViewController.swift */; };
-		BA9F46C2284FB84C00FDCEB7 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BA9F46C0284FB84C00FDCEB7 /* Main.storyboard */; };
 		BA9F46C4284FB84D00FDCEB7 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BA9F46C3284FB84D00FDCEB7 /* Assets.xcassets */; };
 		BA9F46C7284FB84D00FDCEB7 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BA9F46C5284FB84D00FDCEB7 /* LaunchScreen.storyboard */; };
+		BA9F46CF284FB98400FDCEB7 /* CodeReaderViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA9F46CE284FB98400FDCEB7 /* CodeReaderViewController.swift */; };
+		BA9F46D4284FB9A700FDCEB7 /* WebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA9F46D2284FB9A700FDCEB7 /* WebViewController.swift */; };
+		BA9F46D5284FB9A700FDCEB7 /* ARHologramViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA9F46D3284FB9A700FDCEB7 /* ARHologramViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		BA9F46B7284FB84C00FDCEB7 /* QARCode.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = QARCode.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		BA9F46BA284FB84C00FDCEB7 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		BA9F46BC284FB84C00FDCEB7 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		BA9F46BE284FB84C00FDCEB7 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
-		BA9F46C1284FB84C00FDCEB7 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		BA9F46C3284FB84D00FDCEB7 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		BA9F46C6284FB84D00FDCEB7 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		BA9F46C8284FB84D00FDCEB7 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		BA9F46CE284FB98400FDCEB7 /* CodeReaderViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CodeReaderViewController.swift; sourceTree = "<group>"; };
+		BA9F46D2284FB9A700FDCEB7 /* WebViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WebViewController.swift; sourceTree = "<group>"; };
+		BA9F46D3284FB9A700FDCEB7 /* ARHologramViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ARHologramViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -56,15 +58,32 @@
 		BA9F46B9284FB84C00FDCEB7 /* QARCode */ = {
 			isa = PBXGroup;
 			children = (
+				BA9F46D0284FB98A00FDCEB7 /* CodeReaderFeat */,
+				BA9F46D1284FB9A700FDCEB7 /* ARHologramFeat */,
 				BA9F46BA284FB84C00FDCEB7 /* AppDelegate.swift */,
 				BA9F46BC284FB84C00FDCEB7 /* SceneDelegate.swift */,
-				BA9F46BE284FB84C00FDCEB7 /* ViewController.swift */,
-				BA9F46C0284FB84C00FDCEB7 /* Main.storyboard */,
 				BA9F46C3284FB84D00FDCEB7 /* Assets.xcassets */,
 				BA9F46C5284FB84D00FDCEB7 /* LaunchScreen.storyboard */,
 				BA9F46C8284FB84D00FDCEB7 /* Info.plist */,
 			);
 			path = QARCode;
+			sourceTree = "<group>";
+		};
+		BA9F46D0284FB98A00FDCEB7 /* CodeReaderFeat */ = {
+			isa = PBXGroup;
+			children = (
+				BA9F46CE284FB98400FDCEB7 /* CodeReaderViewController.swift */,
+			);
+			path = CodeReaderFeat;
+			sourceTree = "<group>";
+		};
+		BA9F46D1284FB9A700FDCEB7 /* ARHologramFeat */ = {
+			isa = PBXGroup;
+			children = (
+				BA9F46D2284FB9A700FDCEB7 /* WebViewController.swift */,
+				BA9F46D3284FB9A700FDCEB7 /* ARHologramViewController.swift */,
+			);
+			path = ARHologramFeat;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -127,7 +146,6 @@
 			files = (
 				BA9F46C7284FB84D00FDCEB7 /* LaunchScreen.storyboard in Resources */,
 				BA9F46C4284FB84D00FDCEB7 /* Assets.xcassets in Resources */,
-				BA9F46C2284FB84C00FDCEB7 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -138,23 +156,17 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				BA9F46BF284FB84C00FDCEB7 /* ViewController.swift in Sources */,
+				BA9F46D5284FB9A700FDCEB7 /* ARHologramViewController.swift in Sources */,
 				BA9F46BB284FB84C00FDCEB7 /* AppDelegate.swift in Sources */,
+				BA9F46CF284FB98400FDCEB7 /* CodeReaderViewController.swift in Sources */,
 				BA9F46BD284FB84C00FDCEB7 /* SceneDelegate.swift in Sources */,
+				BA9F46D4284FB9A700FDCEB7 /* WebViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXVariantGroup section */
-		BA9F46C0284FB84C00FDCEB7 /* Main.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				BA9F46C1284FB84C00FDCEB7 /* Base */,
-			);
-			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
 		BA9F46C5284FB84D00FDCEB7 /* LaunchScreen.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -292,7 +304,6 @@
 				INFOPLIST_FILE = QARCode/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
-				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -320,7 +331,6 @@
 				INFOPLIST_FILE = QARCode/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
-				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				LD_RUNPATH_SEARCH_PATHS = (
