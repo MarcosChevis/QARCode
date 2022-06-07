@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import AVFoundation
 
 final class CodeReaderViewController: UIViewController {
     var captureSession: AVCaptureSession = AVCaptureSession()
