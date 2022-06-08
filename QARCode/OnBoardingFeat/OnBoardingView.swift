@@ -23,7 +23,10 @@ class OnBoardingView: UIView {
         self.labelDescription.text = labelDescription
         self.imageName = imageName
         
+        
         super.init(frame: .zero)
+
+        setup()
     }
     
     required init?(coder: NSCoder) {
@@ -35,10 +38,7 @@ class OnBoardingView: UIView {
         titleLabel.textAlignment = .center
         titleLabel.numberOfLines = 0
         titleLabel.font = UIFont .boldSystemFont(ofSize: 40.0)
-        self.addSubview(titleLabel)
-        
-        // image view
-        self.addSubview(imageView)
+        imageView.contentMode = .scaleAspectFit
         
         setupConstraints()
     }
@@ -46,9 +46,15 @@ class OnBoardingView: UIView {
     private func setupConstraints() {
         
         // unauthorizing automatic constraints
+
+        self.addSubview(titleLabel)
+        self.addSubview(labelDescription)
+        self.addSubview(imageView)
+        
         titleLabel.translatesAutoresizingMaskIntoConstraints = false
         labelDescription.translatesAutoresizingMaskIntoConstraints = false
         imageView.translatesAutoresizingMaskIntoConstraints = false
+        
         
         NSLayoutConstraint.activate([
             titleLabel.topAnchor.constraint(equalTo: self.topAnchor),
@@ -62,7 +68,7 @@ class OnBoardingView: UIView {
             imageView.widthAnchor.constraint(equalToConstant: 250),
             imageView.heightAnchor.constraint(equalToConstant: 200),
             imageView.centerXAnchor.constraint(equalTo: self.centerXAnchor),
-            imageView.topAnchor.constraint(equalTo: labelDescription.bottomAnchor, constant: 50)
+            imageView.topAnchor.constraint(equalTo: labelDescription.bottomAnchor, constant: 50),
             
         ])
             

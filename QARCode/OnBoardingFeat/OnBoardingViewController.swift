@@ -16,6 +16,7 @@ class OnBoardingViewController: UIViewController {
     //MARK: inits
     init(isOnboarding: Bool) {
         self.isOnboarding = isOnboarding
+        
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -47,7 +48,8 @@ class OnBoardingViewController: UIViewController {
     //MARK: ScrollView - Tutorial
     lazy var scrollView: UIScrollView = {
         let scrollView = UIScrollView()
-        scrollView.showsVerticalScrollIndicator = true
+        scrollView.backgroundColor = .blue
+        scrollView.showsHorizontalScrollIndicator = false
         scrollView.isPagingEnabled = true
         scrollView.contentSize = CGSize(width: view.frame.width * CGFloat(arrayOfCards.count), height: view.frame.height)
        
@@ -64,7 +66,7 @@ class OnBoardingViewController: UIViewController {
         let pageControl = UIPageControl()
         pageControl.numberOfPages = arrayOfCards.count
         pageControl.currentPage = 0
-        pageControl.isEnabled = false
+        pageControl.isEnabled = true
         pageControl.addTarget(self, action: #selector(pageControlTapHandler(sender:)), for: .valueChanged)
         
         return pageControl
@@ -75,7 +77,7 @@ class OnBoardingViewController: UIViewController {
         let button = UIButton(type: .system)
         button.setTitle("Próximo", for: .normal)
         button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 18)
-        button.addTarget(self, action: #selector(addPageContol), for: .touchUpInside)
+        button.addTarget(self, action: #selector(addPageControl), for: .touchUpInside)
         
         return button
     }()
@@ -114,16 +116,16 @@ class OnBoardingViewController: UIViewController {
     @objc
     func pageControlTapHandler(sender: UIPageControl) {
         var frame: CGRect = scrollView.frame
-        frame.origin.x = frame.size.width * CGFloat(sender.currentPage )
+        frame.origin.x = frame.size.width * CGFloat(sender.currentPage)
         scrollView.scrollRectToVisible(frame, animated: true)
     }
     
     @objc
-    func addPageContol(){
+    func addPageControl(){
         if (scrollView.contentOffset.x+view.frame.width < view.frame.width*CGFloat(arrayOfCards.count)) {
             scrollView.setContentOffset(CGPoint(x: scrollView.contentOffset.x+view.frame.width, y: 0), animated: false)
             
-            if (scrollView.contentOffset.x+view.frame.width == view.frame.width*CGFloat(arrayOfCards.count)) {
+            if (scrollView.contentOffset.x + view.frame.width == view.frame.width*CGFloat(arrayOfCards.count)) {
                 nextButton.setTitle("Terminar", for: .normal)
             }
         } else {
@@ -156,7 +158,7 @@ class OnBoardingViewController: UIViewController {
         navigationController?.navigationBar.isHidden = true
         
         /// setting up after loading the view
-        view.backgroundColor = UIColor(named: "corAzul")
+        view.backgroundColor = .red
         view.addSubview(scrollView)
         view.addSubview(pageControl)
         view.addSubview(previousButton)
@@ -184,10 +186,10 @@ class OnBoardingViewController: UIViewController {
             pageControl.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -40),
             
             /// scrollView
-            scrollView.topAnchor.constraint(equalTo: view.topAnchor, constant: view.frame.height/6),
+            scrollView.topAnchor.constraint(equalTo: view.topAnchor),
             scrollView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             scrollView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            scrollView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: view.frame.height/3),
+            scrollView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
             
             /// nextButton
             nextButton.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -40),
@@ -207,6 +209,7 @@ class OnBoardingViewController: UIViewController {
     }
 }
 
+//MARK: Extension
 extension OnBoardingViewController: UIScrollViewDelegate {
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) { // making sure it goes to the other card
