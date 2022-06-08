@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import AVFoundation
 
 final class CodeReaderViewController: UIViewController {
     
@@ -111,6 +112,9 @@ final class CodeReaderViewController: UIViewController {
         
         self.finalQRCode = qrCodeMetadata
         self.photoOutput.capturePhoto(with: AVCapturePhotoSettings(), delegate: self)
+    }
+    
+        view.layer.addSublayer(previewLayer)
     }
     
     override var prefersStatusBarHidden: Bool {
@@ -260,11 +264,16 @@ extension UIImage {
         UIGraphicsBeginImageContextWithOptions(newSize, false, self.scale)
         let context = UIGraphicsGetCurrentContext()!
 
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
+        // Move origin to middle
+        context.translateBy(x: newSize.width/2, y: newSize.height/2)
+        // Rotate around middle
+        context.rotate(by: CGFloat(radians))
+        // Draw the image at its center
+        self.draw(in: CGRect(x: -self.size.width/2, y: -self.size.height/2, width: self.size.width, height: self.size.height))
 
+        let newImage = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+
+        return newImage
+    }
 }
