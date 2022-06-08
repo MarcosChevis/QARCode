@@ -114,8 +114,7 @@ final class CodeReaderViewController: UIViewController {
         self.photoOutput.capturePhoto(with: AVCapturePhotoSettings(), delegate: self)
     }
     
-        view.layer.addSublayer(previewLayer)
-    }
+        
     
     override var prefersStatusBarHidden: Bool {
         return true
