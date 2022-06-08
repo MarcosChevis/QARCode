@@ -80,8 +80,8 @@
 		BA9F46D1284FB9A700FDCEB7 /* ARHologramFeat */ = {
 			isa = PBXGroup;
 			children = (
-				BA9F46D2284FB9A700FDCEB7 /* WebViewController.swift */,
 				BA9F46D3284FB9A700FDCEB7 /* ARHologramViewController.swift */,
+				BA9F46D2284FB9A700FDCEB7 /* WebViewController.swift */,
 			);
 			path = ARHologramFeat;
 			sourceTree = "<group>";
@@ -302,6 +302,7 @@
 				DEVELOPMENT_TEAM = QRB568C47A;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = QARCode/Info.plist;
+				INFOPLIST_KEY_NSCameraUsageDescription = Use;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
@@ -329,6 +330,7 @@
 				DEVELOPMENT_TEAM = QRB568C47A;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = QARCode/Info.plist;
+				INFOPLIST_KEY_NSCameraUsageDescription = Use;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
