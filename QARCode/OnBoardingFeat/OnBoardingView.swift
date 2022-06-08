@@ -35,9 +35,13 @@ class OnBoardingView: UIView {
     
     func setup() {
         // title label
-        titleLabel.textAlignment = .center
+        //titleLabel.textAlignment = .center
         titleLabel.numberOfLines = 0
-        titleLabel.font = UIFont .boldSystemFont(ofSize: 40.0)
+        titleLabel.font = UIFont .boldSystemFont(ofSize: 35.0)
+        
+        labelDescription.font = .systemFont(ofSize: 20.0)
+        labelDescription.numberOfLines = 2
+        
         imageView.contentMode = .scaleAspectFit
         
         setupConstraints()
@@ -55,20 +59,22 @@ class OnBoardingView: UIView {
         labelDescription.translatesAutoresizingMaskIntoConstraints = false
         imageView.translatesAutoresizingMaskIntoConstraints = false
         
+        let size = UIScreen.main.bounds
         
         NSLayoutConstraint.activate([
-            titleLabel.topAnchor.constraint(equalTo: self.topAnchor),
-            titleLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 30),
-            titleLabel.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -30),
+            titleLabel.topAnchor.constraint(equalTo: self.safeAreaLayoutGuide.topAnchor, constant: size.height*0.1),
+            titleLabel.leadingAnchor.constraint(equalTo: self.safeAreaLayoutGuide.leadingAnchor, constant: 30),
+            titleLabel.trailingAnchor.constraint(equalTo: self.safeAreaLayoutGuide.trailingAnchor),
             
             labelDescription.topAnchor.constraint(equalTo: titleLabel.bottomAnchor,constant: 30),
-            labelDescription.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 30),
-            labelDescription.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -30),
+            labelDescription.leadingAnchor.constraint(equalTo: self.safeAreaLayoutGuide.leadingAnchor, constant: 30),
+            labelDescription.trailingAnchor.constraint(equalTo: self.safeAreaLayoutGuide.trailingAnchor, constant: -20),
 
-            imageView.widthAnchor.constraint(equalToConstant: 250),
-            imageView.heightAnchor.constraint(equalToConstant: 200),
-            imageView.centerXAnchor.constraint(equalTo: self.centerXAnchor),
-            imageView.topAnchor.constraint(equalTo: labelDescription.bottomAnchor, constant: 50),
+//            imageView.widthAnchor.constraint(equalToConstant: 250),
+            imageView.centerXAnchor.constraint(equalTo: self.labelDescription.centerXAnchor),
+//            imageView.trailingAnchor.constraint(equalTo: self.safeAreaLayoutGuide.trailingAnchor, constant: 30),
+            imageView.topAnchor.constraint(equalTo: labelDescription.bottomAnchor, constant: 16),
+            imageView.bottomAnchor.constraint(equalTo: self.safeAreaLayoutGuide.bottomAnchor, constant: -100),
             
         ])
             

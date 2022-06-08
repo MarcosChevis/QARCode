@@ -26,19 +26,19 @@ class OnBoardingViewController: UIViewController {
     
     //MARK: Cards - Tutorial
     lazy var first_card: OnBoardingView = {
-        let card = OnBoardingView(titleLabel: "Aponte a Câmera", labelDescription: "Aponte a câmera para o local em que estiver o QRCode desejado.", imageName: "Tutorial - 1")
+        let card = OnBoardingView(titleLabel: "Aponte a Câmera", labelDescription: "Aponte a câmera para o local em que estiver o QR Code desejado.", imageName: "Tutorial - 1")
     
         return card
     }()
     
     lazy var second_card: OnBoardingView = {
-        let card = OnBoardingView(titleLabel: "Selecione o QRCode", labelDescription: "Selecione o QRCode de seu interesse para que ocorra a leitura.", imageName: "Tutorial - 2")
+        let card = OnBoardingView(titleLabel: "Selecione o QR Code", labelDescription: "Selecione o QR Code de seu interesse para que ocorra a leitura.", imageName: "Tutorial - 2")
         
         return card
     }()
     
     lazy var third_card: OnBoardingView = {
-        let card = OnBoardingView(titleLabel: "Veja o Site saltando", labelDescription: "Veja um holograma da página web no qual o QRCode te leva!", imageName: "Tutorial - 3")
+        let card = OnBoardingView(titleLabel: "Veja o Site saltando", labelDescription: "Veja um holograma da página web no qual o QR Code te leva!", imageName: "Tutorial - 3")
         
         return card
     }()
@@ -48,7 +48,7 @@ class OnBoardingViewController: UIViewController {
     //MARK: ScrollView - Tutorial
     lazy var scrollView: UIScrollView = {
         let scrollView = UIScrollView()
-        scrollView.backgroundColor = .blue
+        scrollView.backgroundColor = UIColor(named: "background")
         scrollView.showsHorizontalScrollIndicator = false
         scrollView.isPagingEnabled = true
         scrollView.contentSize = CGSize(width: view.frame.width * CGFloat(arrayOfCards.count), height: view.frame.height)
