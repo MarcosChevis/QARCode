@@ -13,8 +13,9 @@ class OnBoardingViewController: UIViewController {
     
     var isOnboarding: Bool
     
-    // inits
-    init() {
+    //MARK: inits
+    init(isOnboarding: Bool) {
+        self.isOnboarding = isOnboarding
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -100,9 +101,110 @@ class OnBoardingViewController: UIViewController {
         /// putting the image
         button.setImage(largeBoldDoc, for: .normal)
         
+        /// setting somethings of the button
+        button.layer.cornerRadius = 30
+        
+        /// onBoarding
+        isOnboarding ? button.addTarget(self, action: #selector(actionNavigateViewController), for: .touchUpInside) : button.addTarget(self, action: #selector(actionDismiss), for: .touchUpInside)
+        
         return button
     }()
     
+    //MARK: objc
+    @objc
+    func pageControlTapHandler(sender: UIPageControl) {
+        var frame: CGRect = scrollView.frame
+        frame.origin.x = frame.size.width * CGFloat(sender.currentPage )
+        scrollView.scrollRectToVisible(frame, animated: true)
+    }
+    
+    @objc
+    func addPageContol(){
+        if (scrollView.contentOffset.x+view.frame.width < view.frame.width*CGFloat(arrayOfCards.count)) {
+            scrollView.setContentOffset(CGPoint(x: scrollView.contentOffset.x+view.frame.width, y: 0), animated: false)
+            
+            if (scrollView.contentOffset.x+view.frame.width == view.frame.width*CGFloat(arrayOfCards.count)) {
+                nextButton.setTitle("Terminar", for: .normal)
+            }
+        } else {
+            dismiss(animated: true, completion: nil)
+        }
+    }
+    
+    @objc
+    func subPageControl(){
+        nextButton.setTitle("Próximo", for: .normal)
+        if (scrollView.contentOffset.x-view.frame.width>=0){
+            scrollView.setContentOffset(CGPoint(x: scrollView.contentOffset.x-view.frame.width, y: 0), animated: false)
+        }
+    }
+    
+    @objc
+    func actionDismiss(){
+        dismiss(animated: true, completion: nil)
+    }
+    
+    @objc
+    func actionNavigateViewController() {
+        //TODO: colocar para qual viewController isso aqui vai dar dismiss
+    }
+    
+    
+    //MARK: viewDidLoad()
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        navigationController?.navigationBar.isHidden = true
+        
+        /// setting up after loading the view
+        view.backgroundColor = UIColor(named: "corAzul")
+        view.addSubview(scrollView)
+        view.addSubview(pageControl)
+        view.addSubview(previousButton)
+        view.addSubview(nextButton)
+        view.addSubview(closeButton)
+        setupConstraints()
+    }
+    
+    //MARK: Constraints
+    func setupConstraints() {
+        
+        // unauthorizing automatic constraints
+        pageControl.translatesAutoresizingMaskIntoConstraints = false
+        scrollView.translatesAutoresizingMaskIntoConstraints = false
+        nextButton.translatesAutoresizingMaskIntoConstraints = false
+        previousButton.translatesAutoresizingMaskIntoConstraints = false
+        closeButton.translatesAutoresizingMaskIntoConstraints = false
+        
+        NSLayoutConstraint.activate([
+            
+            /// pageControl
+            pageControl.heightAnchor.constraint(equalToConstant: 50),
+            pageControl.leadingAnchor.constraint(equalTo: view.leadingAnchor,constant: 30),
+            pageControl.trailingAnchor.constraint(equalTo: view.trailingAnchor,constant: -30),
+            pageControl.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -40),
+            
+            /// scrollView
+            scrollView.topAnchor.constraint(equalTo: view.topAnchor, constant: view.frame.height/6),
+            scrollView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            scrollView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            scrollView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: view.frame.height/3),
+            
+            /// nextButton
+            nextButton.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -40),
+            nextButton.rightAnchor.constraint(equalTo: view.rightAnchor, constant:-30),
+            
+            /// previousButton
+            previousButton.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -40),
+            previousButton.leftAnchor.constraint(equalTo: view.leftAnchor,constant: 30),
+            
+            /// closeButton
+            closeButton.widthAnchor.constraint(equalToConstant: 48),
+            closeButton.heightAnchor.constraint(equalToConstant: 48),
+            closeButton.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 25),
+            closeButton.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor,constant:16)
+            
+        ])
+    }
 }
 
 extension OnBoardingViewController: UIScrollViewDelegate {

@@ -19,11 +19,11 @@ class OnBoardingView: UIView {
     
     
     init(titleLabel: String, labelDescription: String, imageName: String) {
-        super.init(frame: .zero)
-        
         self.titleLabel.text = titleLabel
         self.labelDescription.text = labelDescription
         self.imageName = imageName
+        
+        super.init(frame: .zero)
     }
     
     required init?(coder: NSCoder) {
