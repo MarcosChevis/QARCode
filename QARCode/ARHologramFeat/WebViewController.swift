@@ -8,12 +8,29 @@
 import Foundation
 import UIKit
 import WebKit
+import SwiftUI
+
+struct WebView: UIViewRepresentable {
+ 
+    var url: URL
+ 
+    func makeUIView(context: Context) -> WKWebView {
+        return WKWebView()
+    }
+ 
+    func updateUIView(_ webView: WKWebView, context: Context) {
+        let request = URLRequest(url: url)
+        webView.load(request)
+    }
+}
 
 final class WebViewController: UIViewController, WKNavigationDelegate {
     var url: URL
     lazy var webView: WKWebView = {
         
         let v = WKWebView(frame: .zero)
+        v.configuration.allowsInlineMediaPlayback = true
+        v.configuration.mediaTypesRequiringUserActionForPlayback = []
         v.load(URLRequest(url: self.url))
         v.reload()
         v.translatesAutoresizingMaskIntoConstraints = false

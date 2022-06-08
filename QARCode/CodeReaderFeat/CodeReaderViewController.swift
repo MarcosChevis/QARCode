@@ -9,17 +9,27 @@ import UIKit
 import AVFoundation
 
 final class CodeReaderViewController: UIViewController {
+    
+    struct MetadataInfo {
+        var corners: [CGPoint]
+        var string: String
+    }
+    
     var captureSession: AVCaptureSession = AVCaptureSession()
     var previewLayer: AVCaptureVideoPreviewLayer?
-    private let sessionQueue = DispatchQueue(label: "session queue")
     private let photoOutput = AVCapturePhotoOutput()
+//    var detectionOverlays: [CALayer] = []
     
     var capturedImage: CGImage?
     var finalImage: CGImage?
-    var stringValue: String = ""
-    var rectImage: CGRect = .init()
+    var finalQRCodeRect: CGRect = .init()
     
-    var corners: [CGPoint] = .init()
+    var qrCodes: [MetadataInfo] = []
+    var finalQRCode: MetadataInfo?
+    
+    
+    var detectionSublayer: CALayer?
+    
     
     
     override func viewDidLoad() {
@@ -90,40 +100,118 @@ final class CodeReaderViewController: UIViewController {
         
         previewLayer.frame = view.layer.bounds
         previewLayer.videoGravity = .resizeAspectFill
+        
         view.layer.addSublayer(previewLayer)
     }
+    
+    private func qrCodeMarkerPreviewLayer(qrCodes: [MetadataInfo]) {
+        
+    }
+    
+    func found(qrCodeMetadata: MetadataInfo) {
+        
+        self.finalQRCode = qrCodeMetadata
+        self.photoOutput.capturePhoto(with: AVCapturePhotoSettings(), delegate: self)
+    }
+    
+        
     
     override var prefersStatusBarHidden: Bool {
         return true
     }
     
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        for touch in touches {
+            if let qrCodeMetadata = getQRCodeIn(touchLocation: touch.location(in: self.view), qrCodesMetadata: qrCodes) {
+                
+                found(qrCodeMetadata: qrCodeMetadata)
+                return
+            }
+        }
+        print("oh")
+    }
+    private func getQRCodeIn(touchLocation: CGPoint, qrCodesMetadata: [MetadataInfo]) -> MetadataInfo? {
+        for qrCodeMetadata in qrCodesMetadata {
+            if isPointInRect(point: touchLocation, rect: translateCornersSpaceIntoViewSpace(corners: qrCodeMetadata.corners)) {
+                return qrCodeMetadata
+            }
+            return nil
+        }
+        
+        return nil
+    }
+    private func translateCornersSpaceIntoViewSpace(corners: [CGPoint]) -> CGRect {
+       let newCorners = corners.map({ point -> CGPoint in
+            var newPoint = point
+            newPoint.x *= CGFloat(self.view.frame.height)
+            newPoint.y *= CGFloat(self.view.frame.width)
+            return newPoint
+        })
+        
+        return CGRect(x: self.view.frame.width - newCorners[0].y,
+                      y: newCorners[0].x,
+                      width: (newCorners[0].y - newCorners[2].y) ,
+                      height: (newCorners[2].x - newCorners[0].x))
+
+    }
+    private func isPointInRect(point: CGPoint, rect: CGRect) -> Bool {
+        if (point.x > rect.minX && point.x < rect.maxX) && (point.y > rect.minY && point.y < rect.maxY) {
+            return true
+        }
+        
+        return false
+    }
     
 }
 
 extension CodeReaderViewController: AVCaptureMetadataOutputObjectsDelegate {
     func metadataOutput(_ output: AVCaptureMetadataOutput, didOutput metadataObjects: [AVMetadataObject], from connection: AVCaptureConnection) {
+        qrCodes = []
         
-        
-        self.photoOutput.capturePhoto(with: AVCapturePhotoSettings(), delegate: self)
-//        self.rectImage = metadataObjects[0].bounds
-        
-        if let metadataObject = metadataObjects.first {
-            guard let readableObject = metadataObject as? AVMetadataMachineReadableCodeObject else { return }
-            guard let stringValue = readableObject.stringValue else { return }
-            
-            self.corners = readableObject.corners
-            
-            self.stringValue = stringValue
-            self.captureSession.stopRunning()
+        for metadataObject in metadataObjects {
+            guard let readableObject = metadataObject as? AVMetadataMachineReadableCodeObject,
+                  let stringValue = readableObject.stringValue else { return }
+            qrCodes.append(MetadataInfo(corners: readableObject.corners, string: stringValue))
         }
         
-    }
-    
-    func found(code: String) {
-        print(code)
-        let vc = ARHologramViewController(string: code, cgImage: finalImage)
-        vc.modalPresentationStyle = .fullScreen
-        present(vc, animated: false)
+        detectionSublayer?.removeFromSuperlayer()
+        let shapeLayer = CAShapeLayer()
+        detectionSublayer = shapeLayer
+        
+        
+        guard let oldCorners = (metadataObjects.first as? AVMetadataMachineReadableCodeObject)?.corners else { return }
+        
+        let rect = translateCornersSpaceIntoViewSpace(corners: oldCorners)
+        let offSet = rect.width/3
+        
+        let bezierPath = UIBezierPath()
+        
+        
+        bezierPath.move(to: CGPoint(x: rect.minX + offSet, y: rect.minY))
+        bezierPath.addLine(to: CGPoint(x: rect.minX, y: rect.minY))
+        bezierPath.addLine(to: CGPoint(x: rect.minX, y: rect.minY + offSet))
+        
+        bezierPath.move(to: CGPoint(x: rect.maxX - offSet, y: rect.minY))
+        bezierPath.addLine(to: CGPoint(x: rect.maxX, y: rect.minY))
+        bezierPath.addLine(to: CGPoint(x: rect.maxX, y: rect.minY + offSet))
+        
+        bezierPath.move(to: CGPoint(x: rect.minX + offSet, y: rect.maxY))
+        bezierPath.addLine(to: CGPoint(x: rect.minX, y: rect.maxY))
+        bezierPath.addLine(to: CGPoint(x: rect.minX, y: rect.maxY - offSet))
+        
+        bezierPath.move(to: CGPoint(x: rect.maxX - offSet, y: rect.maxY))
+        bezierPath.addLine(to: CGPoint(x: rect.maxX, y: rect.maxY))
+        bezierPath.addLine(to: CGPoint(x: rect.maxX, y: rect.maxY - offSet))
+        
+        
+        
+        shapeLayer.path = bezierPath.cgPath
+        shapeLayer.strokeColor = UIColor.systemBlue.cgColor
+        shapeLayer.fillColor = UIColor.clear.cgColor
+        shapeLayer.lineWidth = 5
+        
+        previewLayer?.addSublayer(shapeLayer)
+        
     }
 }
 
@@ -138,9 +226,10 @@ extension CodeReaderViewController: AVCapturePhotoCaptureDelegate {
             self.capturedImage = img
             
             
-            guard let capturedImage = self.capturedImage else { return }
+            guard let capturedImage = self.capturedImage,
+                  var finalQRCode = finalQRCode else { return }
             
-            self.corners = self.corners.map({ point -> CGPoint in
+            finalQRCode.corners = finalQRCode.corners.map({ point -> CGPoint in
                 var newPoint = point
                 guard let capturedImage = self.capturedImage else { return .init() }
                 newPoint.x *= CGFloat(capturedImage.width)
@@ -148,15 +237,18 @@ extension CodeReaderViewController: AVCapturePhotoCaptureDelegate {
                 return newPoint
             })
             
-            rectImage = CGRect(x: corners[0].x,
-                               y: corners[0].y,
-                               width: corners[2].x - corners[0].x,
-                               height: corners[2].y - corners[0].y)
+            finalQRCodeRect = CGRect(x: finalQRCode.corners[0].x,
+                                     y: finalQRCode.corners[0].y,
+                                     width: finalQRCode.corners[2].x - finalQRCode.corners[0].x,
+                                     height: finalQRCode.corners[2].y - finalQRCode.corners[0].y)
             
-            print(rectImage)
-            finalImage =  UIImage(cgImage: capturedImage.cropping(to: self.rectImage)!).rotate(radians: .pi/2)?.cgImage
             
-            self.found(code: stringValue)
+            guard let cgImage = capturedImage.cropping(to: finalQRCodeRect) else { return }
+            finalImage =  UIImage(cgImage: cgImage).rotate(radians: .pi/2)?.cgImage
+            let vc = ARHologramViewController(string: finalQRCode.string, cgImage: finalImage)
+            vc.modalPresentationStyle = .fullScreen
+            present(vc, animated: false)
+            
         }
     }
 }
