@@ -21,8 +21,8 @@ final class ARHologramViewController: UIViewController {
     var qrButton: UIButton?
 
     
-    var sceneView: ARSCNView = {
-        let s: ARSCNView = .init(frame: .zero)
+    lazy var sceneView: CustomARSCNView = {
+        let s: CustomARSCNView = CustomARSCNView(url: url, frame: .zero, options: nil)
         s.translatesAutoresizingMaskIntoConstraints = false
         s.isUserInteractionEnabled = true
 //        s.debugOptions = .showWireframe
@@ -213,7 +213,6 @@ extension ARHologramViewController: ARSCNViewDelegate {
         let viewPlane = SCNPlane(width: pyramid.width*0.9, height: pyramid.height*0.9)
         let viewPlaneNode = SCNNode(geometry: viewPlane)
 
-        
 
         
         pyramidNode.eulerAngles.z = -.pi
@@ -239,3 +238,22 @@ extension ARHologramViewController: ARSCNViewDelegate {
  
 
 
+class CustomARSCNView: ARSCNView {
+    var url: URL?
+    
+    init(url: URL?, frame: CGRect, options: [String: Any]?) {
+        self.url = url
+        super.init(frame: frame, options: options)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        guard let url = url else {
+            return
+        }
+
+        UIApplication.shared.open(url)
+    }
+}
