@@ -38,11 +38,11 @@ class OnBoardingViewController: UIViewController {
         scrollView.backgroundColor = UIColor(named: "background")
         scrollView.showsHorizontalScrollIndicator = false
         scrollView.isPagingEnabled = true
-        scrollView.contentSize = CGSize(width: view.frame.width * CGFloat(arrayOfCards.count), height: view.frame.height)
+        scrollView.contentSize = CGSize(width: view.frame.width * CGFloat(arrayOfCards.count), height: view.frame.height*0.9)
        
         for i in 0..<arrayOfCards.count {
             scrollView.addSubview(arrayOfCards[i])
-            arrayOfCards[i].frame = CGRect(x: view.frame.width * CGFloat(i), y: 0, width: view.frame.width, height: view.frame.height)
+            arrayOfCards[i].frame = CGRect(x: view.frame.width * CGFloat(i), y: 0, width: view.frame.width, height: view.frame.height*0.9)
         }
         scrollView.delegate = self
         

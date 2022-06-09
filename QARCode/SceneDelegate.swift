@@ -20,6 +20,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         let window = UIWindow(windowScene: windowScene)
         let navigationController = UINavigationController(rootViewController: CodeReaderViewController())
         navigationController.isToolbarHidden = true
+        navigationController.isNavigationBarHidden = true
         window.rootViewController = navigationController
         
         window.makeKeyAndVisible()
