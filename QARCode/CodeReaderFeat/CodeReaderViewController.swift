@@ -18,7 +18,6 @@ final class CodeReaderViewController: UIViewController {
     var captureSession: AVCaptureSession = AVCaptureSession()
     var previewLayer: AVCaptureVideoPreviewLayer?
     private let photoOutput = AVCapturePhotoOutput()
-//    var detectionOverlays: [CALayer] = []
     
     var capturedImage: CGImage?
     var finalImage: CGImage?
@@ -30,7 +29,11 @@ final class CodeReaderViewController: UIViewController {
     
     var detectionSublayer: CALayer?
     
+    var onBoardingButton: UIButton?
     
+    @objc private func presentOnBoarding() {
+        navigationController?.pushViewController(OnBoardingViewController(), animated: true)
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -56,8 +59,25 @@ final class CodeReaderViewController: UIViewController {
     private func setup() {
         setupCaptureSession()
         setupPreviewLayer()
+        setupOnboardingButton()
         
         captureSession.startRunning()
+    }
+    
+    private func setupOnboardingButton() {
+        let b = UIButton()
+        b.backgroundColor = .white
+        b.layer.cornerRadius = 90
+        let largeConfig = UIImage.SymbolConfiguration(pointSize: 50, weight: .bold, scale: .large)
+        b.setImage(UIImage(systemName: "questionmark.circle.fill", withConfiguration: largeConfig)?.withTintColor(UIColor.blue, renderingMode: .alwaysOriginal), for: .normal)
+        b.translatesAutoresizingMaskIntoConstraints = false
+        view.addSubview(b)
+        b.addTarget(self, action: #selector(presentOnBoarding), for: .touchUpInside)
+        NSLayoutConstraint.activate([
+            b.trailingAnchor.constraint(equalTo: view.trailingAnchor,constant: -8),
+            b.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -8)
+        ])
+        onBoardingButton = b
     }
     
     private func setupCaptureSession() {
@@ -162,12 +182,18 @@ final class CodeReaderViewController: UIViewController {
         return false
     }
     
+    override var shouldAutorotate: Bool {
+        false
+    }
+    
+
 }
 
 extension CodeReaderViewController: AVCaptureMetadataOutputObjectsDelegate {
     func metadataOutput(_ output: AVCaptureMetadataOutput, didOutput metadataObjects: [AVMetadataObject], from connection: AVCaptureConnection) {
         qrCodes = []
         
+        print("passou aqui")
         for metadataObject in metadataObjects {
             guard let readableObject = metadataObject as? AVMetadataMachineReadableCodeObject,
                   let stringValue = readableObject.stringValue else { return }
@@ -181,6 +207,7 @@ extension CodeReaderViewController: AVCaptureMetadataOutputObjectsDelegate {
         
         guard let oldCorners = (metadataObjects.first as? AVMetadataMachineReadableCodeObject)?.corners else { return }
         
+        print(oldCorners)
         let rect = translateCornersSpaceIntoViewSpace(corners: oldCorners)
         let offSet = rect.width/3
         
@@ -245,10 +272,16 @@ extension CodeReaderViewController: AVCapturePhotoCaptureDelegate {
             
             guard let cgImage = capturedImage.cropping(to: finalQRCodeRect) else { return }
             finalImage =  UIImage(cgImage: cgImage).rotate(radians: .pi/2)?.cgImage
+            DispatchQueue.main.async {
+                self.detectionSublayer?.removeFromSuperlayer()
+            }
             let vc = ARHologramViewController(string: finalQRCode.string, cgImage: finalImage)
-            vc.modalPresentationStyle = .fullScreen
-            present(vc, animated: false)
+            qrCodes = []
+            finalQRCode = .init(corners: [], string: "")
+            finalImage = nil
+            finalQRCodeRect = .zero
             
+            navigationController?.pushViewController(vc, animated: false)
         }
     }
 }
