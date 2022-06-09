@@ -48,7 +48,6 @@ final class ARHologramViewController: UIViewController {
         let con = ARImageTrackingConfiguration()
         con.maximumNumberOfTrackedImages = 1
         guard let cgImage = self.cgImage else { return }
-        print(cgImage.width)
         con.trackingImages = [ARReferenceImage(cgImage, orientation: .up, physicalWidth: 6.5)]
        
         sceneView.session.run(con)

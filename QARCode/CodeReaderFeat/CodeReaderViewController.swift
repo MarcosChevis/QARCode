@@ -126,7 +126,6 @@ final class CodeReaderViewController: UIViewController {
                 return
             }
         }
-        print("oh no")
     }
     
     private func getQRCodeIn(touchLocation: CGPoint, qrCodesMetadata: [MetadataInfo]) -> MetadataInfo? {
@@ -223,7 +222,7 @@ extension CodeReaderViewController: AVCapturePhotoCaptureDelegate {
             print("Error capturing photo: \(error)")
         } else {
             guard let data = photo.fileDataRepresentation() else { return }
-            let img = UIImage(data: data)!.cgImage//fixImageOrientation(UIImage(data: data)!).cgImage
+            let img = UIImage(data: data)?.cgImage
             self.capturedImage = img
             
             
@@ -262,7 +261,7 @@ extension UIImage {
         newSize.height = floor(newSize.height)
 
         UIGraphicsBeginImageContextWithOptions(newSize, false, self.scale)
-        let context = UIGraphicsGetCurrentContext()!
+        guard let context = UIGraphicsGetCurrentContext() else { return .init()}
 
         // Move origin to middle
         context.translateBy(x: newSize.width/2, y: newSize.height/2)
