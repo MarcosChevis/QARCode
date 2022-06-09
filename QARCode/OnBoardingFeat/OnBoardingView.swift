@@ -75,6 +75,7 @@ class OnBoardingView: UIView {
 //            imageView.trailingAnchor.constraint(equalTo: self.safeAreaLayoutGuide.trailingAnchor, constant: 30),
             imageView.topAnchor.constraint(equalTo: labelDescription.bottomAnchor, constant: 16),
             imageView.bottomAnchor.constraint(equalTo: self.safeAreaLayoutGuide.bottomAnchor, constant: -100),
+            imageView.widthAnchor.constraint(lessThanOrEqualTo: self.widthAnchor, multiplier: 0.9)
             
         ])
             
