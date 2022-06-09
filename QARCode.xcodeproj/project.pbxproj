@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		55824515284FBC07005A80ED /* OnBoardingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55824514284FBC07005A80ED /* OnBoardingViewController.swift */; };
+		5582451B284FC5B8005A80ED /* OnBoardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5582451A284FC5B8005A80ED /* OnBoardingView.swift */; };
 		BA9F46BB284FB84C00FDCEB7 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA9F46BA284FB84C00FDCEB7 /* AppDelegate.swift */; };
 		BA9F46BD284FB84C00FDCEB7 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA9F46BC284FB84C00FDCEB7 /* SceneDelegate.swift */; };
 		BA9F46C4284FB84D00FDCEB7 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BA9F46C3284FB84D00FDCEB7 /* Assets.xcassets */; };
@@ -17,6 +19,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		55824514284FBC07005A80ED /* OnBoardingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnBoardingViewController.swift; sourceTree = "<group>"; };
+		5582451A284FC5B8005A80ED /* OnBoardingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnBoardingView.swift; sourceTree = "<group>"; };
 		BA9F46B7284FB84C00FDCEB7 /* QARCode.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = QARCode.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		BA9F46BA284FB84C00FDCEB7 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		BA9F46BC284FB84C00FDCEB7 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -39,6 +43,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		55824513284FBB78005A80ED /* OnBoardingFeat */ = {
+			isa = PBXGroup;
+			children = (
+				55824514284FBC07005A80ED /* OnBoardingViewController.swift */,
+				5582451A284FC5B8005A80ED /* OnBoardingView.swift */,
+			);
+			path = OnBoardingFeat;
+			sourceTree = "<group>";
+		};
 		BA9F46AE284FB84C00FDCEB7 = {
 			isa = PBXGroup;
 			children = (
@@ -58,6 +71,7 @@
 		BA9F46B9284FB84C00FDCEB7 /* QARCode */ = {
 			isa = PBXGroup;
 			children = (
+				55824513284FBB78005A80ED /* OnBoardingFeat */,
 				BA9F46D0284FB98A00FDCEB7 /* CodeReaderFeat */,
 				BA9F46D1284FB9A700FDCEB7 /* ARHologramFeat */,
 				BA9F46BA284FB84C00FDCEB7 /* AppDelegate.swift */,
@@ -159,6 +173,8 @@
 				BA9F46D5284FB9A700FDCEB7 /* ARHologramViewController.swift in Sources */,
 				BA9F46BB284FB84C00FDCEB7 /* AppDelegate.swift in Sources */,
 				BA9F46CF284FB98400FDCEB7 /* CodeReaderViewController.swift in Sources */,
+				55824515284FBC07005A80ED /* OnBoardingViewController.swift in Sources */,
+				5582451B284FC5B8005A80ED /* OnBoardingView.swift in Sources */,
 				BA9F46BD284FB84C00FDCEB7 /* SceneDelegate.swift in Sources */,
 				BA9F46D4284FB9A700FDCEB7 /* WebViewController.swift in Sources */,
 			);
@@ -305,8 +321,9 @@
 				INFOPLIST_KEY_NSCameraUsageDescription = Use;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = UIInterfaceOrientationPortrait;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -316,7 +333,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -333,8 +350,9 @@
 				INFOPLIST_KEY_NSCameraUsageDescription = Use;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = UIInterfaceOrientationPortrait;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -344,7 +362,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};

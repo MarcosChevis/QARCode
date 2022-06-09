@@ -17,6 +17,10 @@ final class ARHologramViewController: UIViewController {
     var url: URL?
     var cgImage: CGImage?
     
+    var onBoardingButton: UIButton?
+    var qrButton: UIButton?
+
+    
     var sceneView: ARSCNView = {
         let s: ARSCNView = .init(frame: .zero)
         s.translatesAutoresizingMaskIntoConstraints = false
@@ -30,6 +34,7 @@ final class ARHologramViewController: UIViewController {
         self.cgImage = cgImage
         self.url = URL(string: string)
         super.init(nibName: nil, bundle: nil)
+        
     }
     
     required init?(coder: NSCoder) {
@@ -42,20 +47,79 @@ final class ARHologramViewController: UIViewController {
 
         sceneView.delegate = self
         setupConstraints()
+        
     }
     
     override func viewWillAppear(_ animated: Bool) {
         let con = ARImageTrackingConfiguration()
         con.maximumNumberOfTrackedImages = 1
         guard let cgImage = self.cgImage else { return }
-        print(cgImage.width)
         con.trackingImages = [ARReferenceImage(cgImage, orientation: .up, physicalWidth: 6.5)]
        
         sceneView.session.run(con)
     }
     
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        setupOnboardingButton()
+        setupQRButton()
+    }
+    
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
+    }
+
+    
+    private func setupQRButton() {
+        let b = UIButton()
+        let v = UIView()
+        v.backgroundColor = .blue
+        v.translatesAutoresizingMaskIntoConstraints = false
+//        b.backgroundColor = .white
+        view.addSubview(v)
+        v.layer.zPosition = 1
+        b.layer.zPosition = 2
+        
+        let largeConfig = UIImage.SymbolConfiguration(pointSize: 50, weight: .bold, scale: .large)
+        b.setImage(UIImage(systemName: "qrcode.viewfinder", withConfiguration: largeConfig)?.withTintColor(UIColor.white, renderingMode: .alwaysOriginal), for: .normal)
+        b.translatesAutoresizingMaskIntoConstraints = false
+        view.addSubview(b)
+        b.addTarget(self, action: #selector(popVC), for: .touchUpInside)
+        NSLayoutConstraint.activate([
+            b.leadingAnchor.constraint(equalTo: view.leadingAnchor,constant: 8),
+            b.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -8),
+            
+            v.leadingAnchor.constraint(equalTo: b.leadingAnchor, constant: 8),
+            v.trailingAnchor.constraint(equalTo: b.trailingAnchor, constant: -8),
+            v.topAnchor.constraint(equalTo: b.topAnchor, constant: 6),
+            v.bottomAnchor.constraint(equalTo: b.bottomAnchor, constant: -6)
+        ])
+        v.layer.cornerRadius = 20
+        qrButton = b
+    }
+    
+    @objc func popVC() {
+        navigationController?.popViewController(animated: false)
+    }
+    
+    private func setupOnboardingButton() {
+        let b = UIButton()
+        b.backgroundColor = .white
+        b.layer.cornerRadius = 85
+        let largeConfig = UIImage.SymbolConfiguration(pointSize: 50, weight: .bold, scale: .large)
+        b.setImage(UIImage(systemName: "questionmark.square.fill", withConfiguration: largeConfig)?.withTintColor(UIColor.blue, renderingMode: .alwaysOriginal), for: .normal)
+        b.translatesAutoresizingMaskIntoConstraints = false
+        view.addSubview(b)
+        b.addTarget(self, action: #selector(presentOnBoarding), for: .touchUpInside)
+        NSLayoutConstraint.activate([
+            b.trailingAnchor.constraint(equalTo: view.trailingAnchor,constant: -8),
+            b.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -8)
+        ])
+        onBoardingButton = b
+    }
+    
+    @objc private func presentOnBoarding() {
+        navigationController?.pushViewController(OnBoardingViewController(), animated: true)
     }
     
     func setupConstraints() {
