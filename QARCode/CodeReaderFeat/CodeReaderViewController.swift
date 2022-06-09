@@ -134,8 +134,6 @@ final class CodeReaderViewController: UIViewController {
         self.photoOutput.capturePhoto(with: AVCapturePhotoSettings(), delegate: self)
     }
     
-        
-    
     override var prefersStatusBarHidden: Bool {
         return true
     }
@@ -148,8 +146,9 @@ final class CodeReaderViewController: UIViewController {
                 return
             }
         }
-        print("oh")
+        print("oh no")
     }
+    
     private func getQRCodeIn(touchLocation: CGPoint, qrCodesMetadata: [MetadataInfo]) -> MetadataInfo? {
         for qrCodeMetadata in qrCodesMetadata {
             if isPointInRect(point: touchLocation, rect: translateCornersSpaceIntoViewSpace(corners: qrCodeMetadata.corners)) {
@@ -160,6 +159,7 @@ final class CodeReaderViewController: UIViewController {
         
         return nil
     }
+    
     private func translateCornersSpaceIntoViewSpace(corners: [CGPoint]) -> CGRect {
        let newCorners = corners.map({ point -> CGPoint in
             var newPoint = point
@@ -174,6 +174,7 @@ final class CodeReaderViewController: UIViewController {
                       height: (newCorners[2].x - newCorners[0].x))
 
     }
+    
     private func isPointInRect(point: CGPoint, rect: CGRect) -> Bool {
         if (point.x > rect.minX && point.x < rect.maxX) && (point.y > rect.minY && point.y < rect.maxY) {
             return true
