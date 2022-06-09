@@ -11,19 +11,6 @@ import UIKit
 
 class OnBoardingViewController: UIViewController {
     
-    var isOnboarding: Bool
-    
-    //MARK: inits
-    init(isOnboarding: Bool) {
-        self.isOnboarding = isOnboarding
-        
-        super.init(nibName: nil, bundle: nil)
-    }
-    
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-    
     //MARK: Cards - Tutorial
     lazy var first_card: OnBoardingView = {
         let card = OnBoardingView(titleLabel: "Aponte a Câmera", labelDescription: "Aponte a câmera para o local em que estiver o QR Code desejado.", imageName: "Tutorial - 1")
@@ -107,7 +94,7 @@ class OnBoardingViewController: UIViewController {
         button.layer.cornerRadius = 30
         
         /// onBoarding
-        isOnboarding ? button.addTarget(self, action: #selector(actionNavigateViewController), for: .touchUpInside) : button.addTarget(self, action: #selector(actionDismiss), for: .touchUpInside)
+        button.addTarget(self, action: #selector(actionDismiss), for: .touchUpInside)
         
         return button
     }()
@@ -129,7 +116,7 @@ class OnBoardingViewController: UIViewController {
                 nextButton.setTitle("Terminar", for: .normal)
             }
         } else {
-            dismiss(animated: true, completion: nil)
+            actionDismiss()
         }
     }
     
@@ -143,12 +130,7 @@ class OnBoardingViewController: UIViewController {
     
     @objc
     func actionDismiss(){
-        dismiss(animated: true, completion: nil)
-    }
-    
-    @objc
-    func actionNavigateViewController() {
-        //TODO: colocar para qual viewController isso aqui vai dar dismiss
+        navigationController?.popViewController(animated: true)
     }
     
     

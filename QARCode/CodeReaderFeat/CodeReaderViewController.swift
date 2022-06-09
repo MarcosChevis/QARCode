@@ -30,7 +30,11 @@ final class CodeReaderViewController: UIViewController {
     
     var detectionSublayer: CALayer?
     
+    var onBoardingButton: UIButton?
     
+    @objc private func presentOnBoarding() {
+        navigationController?.pushViewController(OnBoardingViewController(), animated: true)
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -56,8 +60,22 @@ final class CodeReaderViewController: UIViewController {
     private func setup() {
         setupCaptureSession()
         setupPreviewLayer()
+        setupButton()
         
         captureSession.startRunning()
+    }
+    
+    private func setupButton() {
+        let b = UIButton()
+        b.setImage(UIImage(systemName: "questionmark.circle.fill"), for: .normal)
+        b.translatesAutoresizingMaskIntoConstraints = false
+        view.addSubview(b)
+        b.addTarget(self, action: #selector(presentOnBoarding), for: .touchUpInside)
+        NSLayoutConstraint.activate([
+            b.trailingAnchor.constraint(equalTo: view.trailingAnchor,constant: -8),
+            b.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -8)
+        ])
+        onBoardingButton = b
     }
     
     private func setupCaptureSession() {
@@ -162,6 +180,11 @@ final class CodeReaderViewController: UIViewController {
         return false
     }
     
+    override var shouldAutorotate: Bool {
+        false
+    }
+    
+
 }
 
 extension CodeReaderViewController: AVCaptureMetadataOutputObjectsDelegate {
@@ -246,9 +269,7 @@ extension CodeReaderViewController: AVCapturePhotoCaptureDelegate {
             guard let cgImage = capturedImage.cropping(to: finalQRCodeRect) else { return }
             finalImage =  UIImage(cgImage: cgImage).rotate(radians: .pi/2)?.cgImage
             let vc = ARHologramViewController(string: finalQRCode.string, cgImage: finalImage)
-            vc.modalPresentationStyle = .fullScreen
-            present(vc, animated: false)
-            
+            navigationController?.pushViewController(vc, animated: false)
         }
     }
 }
